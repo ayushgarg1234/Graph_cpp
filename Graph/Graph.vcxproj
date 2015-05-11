@@ -70,6 +70,9 @@
   <ItemGroup>
     <ClInclude Include="linearList_Sequential.h" />
     <ClInclude Include="LinkList.h" />
+    <ClInclude Include="Queue.h" />
+    <ClInclude Include="Stack.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

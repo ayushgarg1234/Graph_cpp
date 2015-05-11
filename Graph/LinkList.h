@@ -2,8 +2,7 @@ using namespace std;
 
 class Node{
 public:
-
-	char element1;
+	Vertex element1;
 	Node *next;
 };
 
@@ -11,22 +10,21 @@ class LinkList{
 public:
 
 	Node* Head;
+	Node* Tail;
 	int length;
 	LinkList();
 	~LinkList();
-	bool search1(char key);
-	int insert1(char x);
-	void deleteElement1(char key);
+	bool search1(int key);
+	int insert1(Vertex x);
+	void deleteElement1(int key);
 	bool Isempty1(LinkList L);
 	int lengthreturn(LinkList L);
-	void updatefile1();
+	//void updatefile1();
 };
 
 LinkList::LinkList()
 {
-	Head = new Node;
-	Head->element1 = NULL;
-	Head->next = NULL;
+	Head = Tail = NULL;
 	length = 0;
 }
 
@@ -35,88 +33,84 @@ LinkList::~LinkList()
 
 }
 
-int LinkList::insert1(char x)
+int LinkList::insert1(Vertex x)
 {
-	if (Head->element1 == NULL)
-	{
-		Head->element1 = x;
-	}
-	else
-	{
-		Node* newelement = new Node;
-		newelement->element1 = x;
-		newelement->next = Head->next;
-		Head->next = newelement;
-	}
+	Node* newelement = new Node;
+	newelement->element1 = x;
+	newelement->next = Head;
+	Head = newelement;
 	length++;
 	return 0;
 }
 
-bool LinkList::search1(char key)
+bool LinkList::search1(int key)
 {
 	Node* temp = Head;
-	while (temp && temp->element1 != key)
+	while (temp && temp->element1.vertex != key)
 	{
 		temp = temp->next;
 	}
 	if (temp)
 	{
-		cout << temp->element1 << endl;
+		cout << temp->element1.vertex << " " << temp->element1.color << endl;
 		return true;
 	}
 	return false;
 }
 
-void LinkList::deleteElement1(char key)
+void LinkList::deleteElement1(int key)
 {
 	Node* temp = Head;
-	Node* previous = Head;
-	while (temp && temp->element1 != key)
+	Node* previous = NULL;
+	while (temp && temp->element1.vertex != key)
 	{
 		previous = temp;
 		temp = temp->next;
 	}
 	if (temp)
 	{
-		if (temp == Head)
-		{
-			Head->element1 = NULL;
-		}
+		if (previous)
 		previous->next = temp->next;
+		if (temp->next == NULL)
+		{
+			Tail = previous;
+		}
+		if (previous == NULL)
+			Head = Tail;
 	}
 }
 
 /*void LinkList::updatefile1()
 {
-	ofstream file1;
-	file1.open("input.txt", std::ios_base::app);
-	char a = ' ';
-	char b = '\n';
-	book tempbook;
-	Node* temp = Head;
-	while (temp)
-	{
+ofstream file1;
+file1.open("input.txt", std::ios_base::app);
+int a = ' ';
+int b = '\n';
+book tempbook;
+Node* temp = Head;
+while (temp)
+{
 
-		if (Head->element1.key[0] != 0)
-		{
-			tempbook = temp->element1;
-			file1 << tempbook.key << a;
-			file1 << tempbook.book_title << a;
-			file1 << tempbook.author1 << a;
-			file1 << tempbook.author2 << a;
-			file1 << tempbook.author3 << a;
-			file1 << tempbook.publisher << a;
-			file1 << tempbook.price << a;
-			file1 << tempbook.number_of_books << b;
-		}
-		temp = temp->next;
-	}
-	file1.close();
+if (Head->element1.key[0] != 0)
+{
+tempbook = temp->element1;
+file1 << tempbook.key << a;
+file1 << tempbook.book_title << a;
+file1 << tempbook.author1 << a;
+file1 << tempbook.author2 << a;
+file1 << tempbook.author3 << a;
+file1 << tempbook.publisher << a;
+file1 << tempbook.price << a;
+file1 << tempbook.number_of_books << b;
+}
+temp = temp->next;
+}
+file1.close();
 }*/
 
 bool LinkList::Isempty1(LinkList L)
 {
-	if (L.Head->element1 == NULL) return true;
+	if (L.Head->element1.vertex == NULL) return true;
 	return false;
 }
 
@@ -125,7 +119,7 @@ int LinkList::lengthreturn(LinkList L)
 	return L.length;
 }
 
-/*class LinkListarray{
+class LinkListarray{
 public:
 	int MaxSize;
 	int len;
@@ -138,10 +132,10 @@ public:
 	int  maxSize();
 	LinkList returnListElement(int k);
 	bool find(int  k);
-	int  search(char key[20], int index);
-	void deleteElement(int  k, char key[20]);
-	int insert(int  k, char x);
-	void updatefile(int k);
+	int  search(int key, int index);
+	void deleteElement(int  k, int key);
+	int insert(int  k, Vertex x);
+	//void updatefile(int k);
 };
 
 LinkListarray::LinkListarray(int MaxListSize)
@@ -189,31 +183,29 @@ bool  LinkListarray::find(int  k)
 	return   true;
 }
 
-int  LinkListarray::search(char key[20], int index)
+int  LinkListarray::search(int key, int index)
 { // Search for x and return the position if found, else return 0.
 	if (element[index].search1(key) == true)    return   1;
 	return   0;
 }
 
-void LinkListarray::deleteElement(int  k, char key[20])
+void LinkListarray::deleteElement(int  k, int key)
 {
 	element[k].deleteElement1(key);
 
 	len--;
 }
 
-void LinkListarray::updatefile(int index)
+/*void LinkListarray::updatefile(int index)
 {
-	element[index].updatefile1();
-}
+element[index].updatefile1();
+}*/
 
-int LinkListarray::insert(int  k, book x)
+int LinkListarray::insert(int  k, Vertex x)
 { // Insert x after kth element. 
-	for (int i = len - 1; i >= k; i--){
-	element[i + 1] = element[i];
-	}
-	int value = element[k].insert1(x, MaxSize);
+
+	int value = element[k].insert1(x);
 	len++;
 	return   value;
-}*/
+}
 

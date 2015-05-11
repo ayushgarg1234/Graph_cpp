@@ -4,31 +4,31 @@ class LinearList{
 public:
 	int MaxSize;
 	int len;
-	char *element;
+	Vertex *element;
 	LinearList(int  MaxSize);
 	LinearList(const LinearList& temp);
 	~LinearList();
 	bool isEmpty();
 	int  length();
 	int  maxSize();
-	char returnListElement(int k);
+	int returnListElement(int k);
 	bool find(int  k);
-	int  search(char key);
+	int  search(int key);
 	void deleteElement(int  k);
-	LinearList  insert(int  k, char x);
+	LinearList  insert(int  k, Vertex x);
 };
 
 LinearList::LinearList(int MaxListSize)
 { // Constructor for the sequential linear list
 	MaxSize = MaxListSize;
-	element = new  char[MaxSize];
+	element = new  Vertex[MaxSize];
 	len = 0;
 }
 
 LinearList::LinearList(const LinearList& temp)
 { // Copy constructor
 	MaxSize = temp.MaxSize;
-	element = new char[MaxSize];
+	element = new Vertex[MaxSize];
 	len = temp.len;
 	memcpy(element, temp.element, MaxSize);
 }
@@ -53,9 +53,9 @@ int  LinearList::maxSize()
 	return   MaxSize;
 }
 
-char  LinearList::returnListElement(int k)
+int  LinearList::returnListElement(int k)
 { //Function that returns the k-th element of the list
-	return element[k];
+	return element[k].vertex;
 }
 bool  LinearList::find(int  k)
 { // Set x to the kth element and return true if kth element is present otherwise return false. 
@@ -63,22 +63,23 @@ bool  LinearList::find(int  k)
 	return   true;
 }
 
-int  LinearList::search(char key)
+int  LinearList::search(int key)
 { // Search for x and return the position if found, else return 0.
 	for (int i = 0; i < len; i++)
-		if (element[i] == key)    return   ++i;
+		if (element[i].vertex == key)    return   ++i;
 	return   0;
 }
 
 void LinearList::deleteElement(int  k)
 {
-	element[k] = NULL;       //flag
+	element[k].vertex = NULL;       //flag
+	element[k].color = NULL;
 	/*for (int i = k; i < len; i++)
 		element[i - 1] = element[i];*/
 	len--;
 }
 
-LinearList  LinearList::insert(int  k, char x)
+LinearList  LinearList::insert(int  k, Vertex x)
 { // Insert x after kth element. 
 	/*for (int i = len - 1; i >= k; i--){
 		element[i + 1] = element[i];

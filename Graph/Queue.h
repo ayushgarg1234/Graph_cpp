@@ -1,39 +1,63 @@
 using namespace std;
 
-class Queue :public LinkList
+class Queue
 {
 public:
+	LinkList* LQ;
+	Queue();
+	bool Isempty();
 	void enqueue(Vertex V);
 	Vertex dequeue();
 };
+
+
+Queue::Queue()
+{
+	LQ = new LinkList();
+}
+
+bool Queue::Isempty()
+{
+	return LQ->Isempty1();
+}
 
 void Queue::enqueue(Vertex V)
 {
 		Node* temp = new Node;
 		temp->element1 = V;
-		if (Tail == NULL)
+		if (LQ->Tail == NULL)
 		{
-			Tail = temp;
-			Tail->next = NULL;
+			LQ->Tail = temp;
+			LQ->Tail->next = NULL;
+			LQ->Head = LQ->Tail;
 		}
 		else
 		{
-			Tail->next = temp;
-			Tail = temp;
-			Tail->next = NULL;
+			LQ->Tail->next = temp;
+			LQ->Tail = temp;
+			LQ->Tail->next = NULL;
 		}
-		length++;
+		LQ->length++;
 }
 
 Vertex Queue::dequeue()
 {
 	Vertex temp;
 	temp.vertex = NULL;
-	if (Head)
+	if (LQ->Head)
 	{
-		temp = Head->element1;
-		Head = Head->next;
-		length--;
+		if (LQ->Head == LQ->Tail)
+		{
+			temp = LQ->Head->element1;
+			LQ->Head = LQ->Head->next;
+			LQ->Tail = LQ->Head;
+		}
+		else
+		{
+			temp = LQ->Head->element1;
+			LQ->Head = LQ->Head->next;
+		}
+		LQ->length--;
 	}
 	return temp;
 }

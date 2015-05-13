@@ -1,9 +1,10 @@
 using namespace std;
 
 class LinearList{
-public:
+private:
 	int MaxSize;
 	int len;
+public:
 	Vertex *element;
 	LinearList(int  MaxSize);
 	LinearList(const LinearList& temp);
@@ -73,7 +74,7 @@ int  LinearList::search(int key)
 void LinearList::deleteElement(int  k)
 {
 	element[k].vertex = NULL;       //flag
-	element[k].color = NULL;
+	//element[k].color = NULL;
 	/*for (int i = k; i < len; i++)
 		element[i - 1] = element[i];*/
 	len--;

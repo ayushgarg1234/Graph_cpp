@@ -4,5 +4,5 @@ class Vertex
 {
 public:
 	int vertex;
-	char color;
+	//char color;
 };

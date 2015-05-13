@@ -1,38 +1,59 @@
 using namespace std;
 
-class Stack :public LinkList
+class Stack
 {
 public:
+	LinkList* LS;
+	Stack();
+	bool Isempty();
 	void push(Vertex V);
 	Vertex pop();
+	Vertex top();
 };
+
+Stack::Stack()
+{
+	LS = new LinkList();
+}
+
+bool Stack::Isempty()
+{
+	return LS->Isempty1();
+}
 
 void Stack::push(Vertex V)
 {
 	Node* temp = new Node;
 	temp->element1 = V;
-	if (Head == NULL)
+	if (LS->Head == NULL)
 	{
-		Head = temp;
-		Head->next = NULL;
+		LS->Head = temp;
+		LS->Head->next = NULL;
 	}
 	else
 	{
-		temp->next = Head;
-		Head = temp;
+		temp->next = LS->Head;
+		LS->Head = temp;
 	}
-	length++;
+	LS->length++;
 }
 
 Vertex Stack::pop()
 {
 	Vertex temp;
 	temp.vertex = NULL;
-	if (Head)
+	if (LS->Head)
 	{
-		temp = Head->element1;
-		Head = Head->next;
-		length--;
+		temp = LS->Head->element1;
+		LS->Head = LS->Head->next;
+		LS->length--;
 	}
+	return temp;
+}
+
+Vertex Stack::top()
+{
+	Vertex temp = pop();
+	push(temp);
 	return temp;
 }

@@ -8,16 +8,16 @@ public:
 
 class LinkList{
 public:
-
+	int length;
 	Node* Head;
 	Node* Tail;
-	int length;
 	LinkList();
 	~LinkList();
+	Vertex returnListElement(int linkindex);
 	bool search1(int key);
 	int insert1(Vertex x);
 	void deleteElement1(int key);
-	bool Isempty1(LinkList L);
+	bool Isempty1();
 	int lengthreturn(LinkList L);
 	//void updatefile1();
 };
@@ -31,6 +31,16 @@ LinkList::LinkList()
 LinkList::~LinkList()
 {
 
+}
+
+Vertex LinkList::returnListElement(int linkindex)
+{
+	Node* temp = Head;
+	for (int i = 0; i < linkindex; i++)
+	{
+		temp = temp->next;
+	}
+	return temp->element1;
 }
 
 int LinkList::insert1(Vertex x)
@@ -52,7 +62,7 @@ bool LinkList::search1(int key)
 	}
 	if (temp)
 	{
-		cout << temp->element1.vertex << " " << temp->element1.color << endl;
+		cout << temp->element1.vertex << endl;
 		return true;
 	}
 	return false;
@@ -70,13 +80,14 @@ void LinkList::deleteElement1(int key)
 	if (temp)
 	{
 		if (previous)
-		previous->next = temp->next;
+			previous->next = temp->next;
 		if (temp->next == NULL)
 		{
 			Tail = previous;
 		}
 		if (previous == NULL)
 			Head = Tail;
+		length--;
 	}
 }
 
@@ -108,9 +119,10 @@ temp = temp->next;
 file1.close();
 }*/
 
-bool LinkList::Isempty1(LinkList L)
+bool LinkList::Isempty1()
 {
-	if (L.Head->element1.vertex == NULL) return true;
+	if (length == 0)
+		return true;
 	return false;
 }
 
@@ -130,7 +142,7 @@ public:
 	bool isEmpty();
 	int  length();
 	int  maxSize();
-	LinkList returnListElement(int k);
+	Vertex returnListElement(int k, int j);
 	bool find(int  k);
 	int  search(int key, int index);
 	void deleteElement(int  k, int key);
@@ -173,9 +185,9 @@ int  LinkListarray::maxSize()
 	return   MaxSize;
 }
 
-LinkList  LinkListarray::returnListElement(int k)
+Vertex  LinkListarray::returnListElement(int k, int j)
 { //Function that returns the k-th element of the list
-	return element[k];
+	return element[k].returnListElement(j);
 }
 bool  LinkListarray::find(int  k)
 { // Set x to the kth element and return true if kth element is present otherwise return false. 

@@ -4,6 +4,8 @@ class graph
 {
 private:
 public:
+	int** inputarray1;
+	int edgecount1;
 	int graphsize;
 	graph(int size);
 	~graph();
@@ -11,6 +13,7 @@ public:
 	void graphinsert(int i, int j);
 	void BFS();
 	void DFS();
+	void Kruskal();
 };
 
 graph::graph(int size)
@@ -24,6 +27,63 @@ graph::~graph()
 
 }
 
+bool compareedge(Edge a, Edge b)
+{
+	return a.weight < b.weight;
+}
+
+void graph::Kruskal()
+{
+	Edge* array = new Edge[edgecount1];
+	int temp = 0;
+	for (int i = 0; i < graphsize; i++)
+	{
+		for (int j = 0; j < graphsize; j++)
+		{
+			if (inputarray1[i][j] != 0)
+			{
+				array[temp].initial = i;
+				array[temp].final = j;
+				array[temp].weight = inputarray1[i][j];
+				temp++;
+			}
+		}
+	}
+
+	sort(array, array + edgecount1, compareedge);
+
+	rootedtree Set(graphsize);
+	for (int i = 0; i < graphsize; i++)
+	{
+		Set.Make_Set(i);
+	}
+
+	Queue Q;
+
+	for (int i = 0; i < edgecount1; i++)
+	{
+		if (Set.Find_Set(array[i].initial) != Set.Find_Set(array[i].final))
+		{
+			Vertex initial, final, weight;
+			initial.vertex = array[i].initial;
+			final.vertex = array[i].final;
+			weight.vertex = array[i].weight;
+			Q.enqueue(initial);
+			Q.enqueue(final);
+			Q.enqueue(weight);
+			Set.Union(array[i].initial, array[i].final);
+		}
+	}
+	cout << "Minimum spanning tree is as follows." << endl;
+	while (!Q.Isempty())
+	{
+		Vertex initial, final, weight;
+		initial = Q.dequeue();
+		final = Q.dequeue();
+		weight = Q.dequeue();
+		cout << "(" << initial.vertex << ", " << final.vertex << ")" << " weight = " << weight.vertex << endl;
+	}
+}
 
 void graph::DFS()
 {

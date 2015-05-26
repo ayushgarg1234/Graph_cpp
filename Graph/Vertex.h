@@ -4,7 +4,8 @@ class Vertex
 {
 public:
 	int vertex;
-	//char color;
+	int length;
+	int key;
 };
 
 class Edge

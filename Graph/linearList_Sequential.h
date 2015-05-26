@@ -73,7 +73,7 @@ int  LinearList::search(int key)
 
 void LinearList::deleteElement(int  k)
 {
-	element[k].vertex = NULL;       //flag
+	element[k].vertex = -1;       //flag
 	//element[k].color = NULL;
 	/*for (int i = k; i < len; i++)
 		element[i - 1] = element[i];*/

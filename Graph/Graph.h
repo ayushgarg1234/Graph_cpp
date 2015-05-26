@@ -10,10 +10,11 @@ public:
 	graph(int size);
 	~graph();
 	LinkListarray* Graph;
-	void graphinsert(int i, int j);
+	void graphinsert(int i, int j, int length);
 	void BFS();
 	void DFS();
 	void Kruskal();
+	void Prims();
 };
 
 graph::graph(int size)
@@ -30,6 +31,47 @@ graph::~graph()
 bool compareedge(Edge a, Edge b)
 {
 	return a.weight < b.weight;
+}
+
+void graph::Prims()
+{
+	int* S = new int[graphsize];
+	int* Key = new int[graphsize];
+	int* parent = new int[graphsize];
+	Heap H(graphsize);
+	for (int i = 0; i < graphsize; i++)
+	{
+		S[i] = 0;
+		Vertex V;
+		V.vertex = i;
+		V.key = 10000;
+		Key[i] = 10000;
+		H.insert(V);
+	}
+	H.decreasekey(0, 1);
+	parent[0] = -1;
+	Key[0] = 0;
+	while (!H.Isempty())
+	{
+		Vertex U;
+		U = H.extractminimum();
+		if (parent[U.vertex]!=-1)
+			cout << "(" << parent[U.vertex] << ", " << U.vertex << ") weight = " << U.key << endl;
+		S[U.vertex] = 1;
+		for (int i = 0; i < Graph->element[U.vertex].length; i++)
+		{
+			Vertex temp = Graph->returnListElement(U.vertex, i);
+			if (S[temp.vertex] == 0)
+			{
+				if (Key[temp.vertex] > temp.length)
+				{
+					parent[temp.vertex] = U.vertex;
+					Key[temp.vertex] = temp.length;
+					H.decreasekey(Key[temp.vertex], H.search(temp.vertex));
+				}
+			}
+		}
+	}
 }
 
 void graph::Kruskal()
@@ -211,10 +253,11 @@ void graph::BFS()
 	}
 }
 
-void graph::graphinsert(int i, int j)
+void graph::graphinsert(int i, int j, int length)
 {
 	Vertex temp;
 	temp.vertex = j;
+	temp.length = length;
 	//temp.color = 'w';
 	Graph->insert(i, temp);
 }

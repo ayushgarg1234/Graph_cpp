@@ -8,6 +8,7 @@
 #include "Stack.h"
 #include "Queue.h"
 #include "Disjoint-Set.h"
+#include "Heap.h"
 #include "Graph.h"
 
 using namespace std;
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
 					if (inputarray[i][j] != 0)
 					{
 						edgecount++;
-						G.graphinsert(i, j);
+						G.graphinsert(i, j, inputarray[i][j]);
 					}
 				}
 			}
@@ -91,7 +92,7 @@ int main(int argc, char *argv[])
 			if (matrix)
 			{
 				cout << "It's a symmetric matrix." << endl;
-				cout << "What do you want to do ? Press 'b' for BFS, 'd' for DFS and 'k' for Kruskal's." << endl;
+				cout << "What do you want to do ? Press 'b' for BFS, 'd' for DFS, 'k' for Kruskal's and 'p' for prim's." << endl;
 				char userin;
 				cin >> userin;
 				if (userin == 'b')
@@ -108,16 +109,35 @@ int main(int argc, char *argv[])
 				{
 					G.Kruskal();
 				}
+				else if (userin == 'p')
+				{
+					G.Prims();
+				}
 				else
 					cout << "wrong input." << endl;
 			}
 			else
 			{
 				cout << "It's not a symmetric matrix." << endl;
-				cout << "DFS Forest" << endl;
-				G.DFS();
+				cout << "What do you want to do ? Press 'd' for DFS, 'k' for Kruskal's and 'p' for prim's." << endl;
+				char userin;
+				cin >> userin;
+				if (userin == 'd')
+				{
+					cout << "DFS Forest" << endl;
+					G.DFS();
+				}
+				else if (userin == 'k')
+				{
+					G.Kruskal();
+				}
+				else if (userin == 'p')
+				{
+					G.Prims();
+				}
+				else
+					cout << "wrong input." << endl;
 			}
-
 			cin >> count;
 		}
 		else

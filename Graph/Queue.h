@@ -43,7 +43,7 @@ void Queue::enqueue(Vertex V)
 Vertex Queue::dequeue()
 {
 	Vertex temp;
-	temp.vertex = NULL;
+	temp.vertex = -1;
 	if (LQ->Head)
 	{
 		if (LQ->Head == LQ->Tail)

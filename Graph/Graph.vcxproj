@@ -70,6 +70,7 @@
   <ItemGroup>
     <ClInclude Include="Disjoint-Set.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="Heap.h" />
     <ClInclude Include="linearList_Sequential.h" />
     <ClInclude Include="LinkList.h" />
     <ClInclude Include="Queue.h" />

@@ -41,7 +41,7 @@ void Stack::push(Vertex V)
 Vertex Stack::pop()
 {
 	Vertex temp;
-	temp.vertex = NULL;
+	temp.vertex = -1;
 	if (LS->Head)
 	{
 		temp = LS->Head->element1;
